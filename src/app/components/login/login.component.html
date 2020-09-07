@@ -1,0 +1,176 @@
+
+
+<div *ngIf="flagFormLogin">
+
+    <section class="material-half-bg">
+        <div class="cover"></div>
+    </section>
+    <section class="login-content">
+        <div class="logo">
+            <img src="assets/img/logo-senamhi.svg" alt="SENAMHI" class="img-fluid rounded" width="250" height="250" />
+        </div>
+        <div class="login-box">
+            <form class="login-form" autocomplete="off" name="myForm" #myForm="ngForm">
+                <h3 class="login-head"><i class="icon-feather-shield"></i>&nbsp; Autenticación</h3>
+                <div class="form-group">
+                    <label>Usuario</label>
+                    <input KapcomAutofocus required [(ngModel)]="loginModel.nombre_usuario" name="nombre_usuario" class="form-control" type="text">
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input required [(ngModel)]="loginModel.clave_usuario" name="clave_usuario" class="form-control" type="password">
+                </div>
+                <div class="form-group">
+                    <div class="utility">
+                        <p class="semibold-text mb-2"><a href="javascript:void(0)" (click)="showFormRecuperarClave()">¿Olvidaste tu contraseña?</a></p>
+                    </div>
+                </div>
+                <div class="form-group btn-container">
+                    <div class="form-row" style="margin-bottom: 1.0em">
+                        <button class="btn btn-primary btn-block" (click)="login()" [disabled]="!myForm.form.valid">
+                            <i class="icon-feather-log-in"></i>&nbsp;Ingresar
+                        </button>
+                    </div>
+                    <div class="form-row">
+                        <button class="btn btn-light btn-block" (click)="showFormRegistro()">
+                            <i class="icon-feather-user-plus"></i>&nbsp;Registrarme
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+</div>
+
+<div *ngIf="flagFormRegistro">
+
+    <section class="material-half-bg">
+        <div class="cover"></div>
+    </section>
+    <section class="login-content">
+        <div class="logo">
+            <img src="assets/img/logo-senamhi.svg" alt="SENAMHI" class="img-fluid rounded" width="250" height="250" />
+        </div>
+        <div class="login-box">
+            <form class="login-form" autocomplete="off" [formGroup]="formRegistro" novalidate>
+                <h3 class="login-head"><i class="icon-feather-users"></i>&nbsp; Registrarme</h3>
+                <div class="form-group">
+                    <label>Usuario</label>
+                    <input KapcomAutofocus class="form-control" type="text" formControlName="nombre_usuario" name="nombre_usuario">
+                </div>
+                <div class="form-group">
+                    <label>Nombres</label>
+                    <input class="form-control" type="text" formControlName="nombres" name="nombres">
+                </div>
+                <div class="form-group">
+                    <label>Apellido paterno</label>
+                    <input name="ape_pater" class="form-control" type="text" formControlName="ape_pater" name="ape_pater">
+                </div>
+                <div class="form-group">
+                    <label>Apellido materno</label>
+                    <input class="form-control" type="text" formControlName="ape_mater" name="ape_mater">
+                </div>
+
+                <div class="form-group">
+                    <label>Correo electrónico</label>
+                    <input class="form-control" type="text" formControlName="email" name="email">
+                </div>
+
+                <div class="form-group">
+                    <label>Tipo Documento</label>
+                    <ng-select class="custom-form-control" [items]="tipoDocumentoList"
+                               [searchable]="false"
+                               bindValue="id_catalogo_item"
+                               bindLabel="value_label"
+                               placeholder="-- Seleccione --"
+                               formControlName="id_tipo_documento">
+                    </ng-select>
+                </div>
+
+                <div class="form-group">
+                    <label>Numero de Documento</label>
+                    <input class="form-control" type="text" formControlName="numero_documento" name="numero_documento">
+                </div>
+
+                <div class="form-group btn-container">
+                    <div class="form-row" style="margin-bottom: 1.0em">
+                        <button class="btn btn-primary btn-block"
+                                [swal]="commonSwal"
+                                (confirm)="registrarPersona()"
+                                [disabled]="!formRegistro.valid">Registrarme</button>
+                    </div>
+                    <div class="form-row">
+                        <button class="btn btn-light btn-block" (click)="showFormLogin()">Volver al login</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+</div>
+
+<div *ngIf="flagFormRecuperarClave">
+
+    <section class="material-half-bg">
+        <div class="cover"></div>
+    </section>
+    <section class="login-content">
+        <div class="logo">
+            <img src="assets/img/logo-senamhi.svg" alt="SENAMHI" class="img-fluid rounded" width="250" height="250" />
+        </div>
+        <div class="login-box">
+            <form class="login-form" autocomplete="off" [formGroup]="formRecuperarClave" novalidate>
+                <h3 class="login-head"><i class="icon-feather-user"></i>&nbsp; Recuperar Contraseña</h3>
+                <div class="form-group">
+                    <label>Usuario</label>
+                    <input KapcomAutofocus formControlName="nombre_usuario" name="nombre_usuario" class="form-control" type="text">
+                </div>
+                <div class="form-group">
+                    <label>Tipo Documento</label>
+                    <ng-select class="custom-form-control" [items]="tipoDocumentoList"
+                               [searchable]="false"
+                               bindValue="id_catalogo_item"
+                               bindLabel="value_label"
+                               placeholder="-- Seleccione --"
+                               formControlName="id_tipo_documento">
+                    </ng-select>
+                </div>
+
+                <div class="form-group">
+                    <label>Numero de Documento</label>
+                    <input formControlName="numero_documento" name="numero_documento" class="form-control" type="text">
+                </div>
+
+                <div class="form-group btn-container">
+                    <div class="form-row" style="margin-bottom: 1.0em">
+                        <button class="btn btn-primary btn-block"
+                                [swal]="commonSwal"
+                                (confirm)="recuperarClave()"
+                                [disabled]="!formRecuperarClave.valid">Recuperar clave</button>
+                    </div>
+                    <div class="form-row">
+                        <button class="btn btn-light btn-block" (click)="showFormLogin()"> Volver al login</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+</div>
+
+<swal
+        #commonSwal
+        title="Confirmar"
+        text="¿Estás seguro de continuar?"
+        type="question"
+        [showCancelButton]="true"
+        [focusCancel]="true">
+</swal>
+
+<spinner
+  [backgroundColor]="'#007bff'"
+  [spinner]="spinkit.skThreeBounce"
+  [debounceDelay]="200"
+>
+</spinner>
